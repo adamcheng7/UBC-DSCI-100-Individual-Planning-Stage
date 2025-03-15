@@ -13,3 +13,18 @@ sessions_test<-sessions_final|>
              )
 
 sessions_test|>full_join(players_data,join_by(hashed_email))
+
+# Old code to load datasets via Google Drive
+
+# Downloading datasets
+
+dir.create("data",showWarnings = FALSE) # Creates a folder in the working directory to store datasets
+
+players_url<-"https://drive.google.com/uc?export=download&id=1WJbKV_BLKGTTsz6phgWA6fPiXkBq67cf"
+sessions_url<-"https://drive.google.com/uc?export=download&id=1Lxg4pQjp8vEK6PafsyDiwFSXjMovHZ3-"
+download.file(players_url,"data/players.csv")
+download.file(sessions_url,"data/sessions.csv")
+
+# Print message when code works
+
+print("Datasets downloaded sucessfully")
