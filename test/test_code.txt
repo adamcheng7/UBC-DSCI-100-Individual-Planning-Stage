@@ -1,0 +1,15 @@
+# test code for deriving variables of sessions.csv
+library(lubridate)
+
+sessions_test<-sessions_final|>
+    mutate(start_datetime = make_datetime(start_year, start_month, start_day, start_hour, start_minute),
+           end_datetime = make_datetime(end_year, end_month, end_day, end_hour, end_minute),
+           time_elapsed = as.numeric(difftime(end_datetime, start_datetime, units = "hours"))
+          )|>
+    group_by(hashed_email)|>
+    summarize(sessions_played=n(),
+              average_session_hours=mean(time_elapsed,na.rm=TRUE),
+              total_play_time=sum(time_elapsed,na.rm=TRUE)
+             )
+
+sessions_test|>full_join(players_data,join_by(hashed_email))
